@@ -1,4 +1,7 @@
+//create_committe.dart
+
 import 'package:flutter/material.dart';
+import 'package:myapp/screens/committee_model.dart';
 
 class CreateCommitteePage extends StatefulWidget {
   const CreateCommitteePage({super.key});
@@ -9,12 +12,12 @@ class CreateCommitteePage extends StatefulWidget {
 
 class _CreateCommitteePageState extends State<CreateCommitteePage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _committeeNameController = TextEditingController();
+  final TextEditingController _committeeNameController =
+      TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _contributionController = TextEditingController();
   String _selectedPaymentCycle = 'Weekly';
 
-  // List of payment cycles (e.g., Weekly, Bi-weekly, Monthly)
   final List<String> _paymentCycles = ['Weekly', 'Bi-weekly', 'Monthly'];
 
   @override
@@ -25,24 +28,16 @@ class _CreateCommitteePageState extends State<CreateCommitteePage> {
     super.dispose();
   }
 
-  // Function to handle form submission
   void _createCommittee() {
     if (_formKey.currentState!.validate()) {
-      // Process data here (for now, just print it)
-      print('Committee Name: ${_committeeNameController.text}');
-      print('Description: ${_descriptionController.text}');
-      print('Contribution Amount: ${_contributionController.text}');
-      print('Payment Cycle: $_selectedPaymentCycle');
-
-      // You can add functionality to save this data to a backend or local storage
-
-      // Show confirmation
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Committee created successfully!')),
+      final newCommittee = Committee(
+        name: _committeeNameController.text,
+        description: _descriptionController.text,
+        paymentCycle: _selectedPaymentCycle,
+        contributionAmount: double.parse(_contributionController.text),
       );
-
-      // Optionally, navigate to another page (e.g., Dashboard)
-      Navigator.pop(context);
+      Navigator.pop(
+          context, newCommittee); // Pass the new committee back to HomePage
     }
   }
 
@@ -60,87 +55,72 @@ class _CreateCommitteePageState extends State<CreateCommitteePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Committee Name
               TextFormField(
                 controller: _committeeNameController,
                 decoration: const InputDecoration(
                   labelText: 'Committee Name',
                   border: OutlineInputBorder(),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a committee name';
-                  }
-                  return null;
-                },
+                validator: (value) => value == null || value.isEmpty
+                    ? 'Please enter a committee name'
+                    : null,
               ),
               const SizedBox(height: 16),
-
-              // Description
               TextFormField(
                 controller: _descriptionController,
-                maxLines: 3,
                 decoration: const InputDecoration(
                   labelText: 'Description',
                   border: OutlineInputBorder(),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a description';
-                  }
-                  return null;
-                },
+                validator: (value) => value == null || value.isEmpty
+                    ? 'Please enter a description'
+                    : null,
               ),
               const SizedBox(height: 16),
-
-              // Contribution Amount
               TextFormField(
                 controller: _contributionController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'Contribution Amount (in \$)',
+                  labelText: 'Contribution Amount',
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a contribution amount';
                   }
+                  final number = double.tryParse(value);
+                  if (number == null) {
+                    return 'Please enter a valid number';
+                  }
                   return null;
                 },
               ),
               const SizedBox(height: 16),
-
-              // Payment Cycle Dropdown
               DropdownButtonFormField<String>(
                 value: _selectedPaymentCycle,
-                items: _paymentCycles.map((String cycle) {
-                  return DropdownMenuItem<String>(
-                    value: cycle,
-                    child: Text(cycle),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedPaymentCycle = newValue!;
-                  });
-                },
                 decoration: const InputDecoration(
                   labelText: 'Payment Cycle',
                   border: OutlineInputBorder(),
                 ),
+                items: _paymentCycles.map((cycle) {
+                  return DropdownMenuItem(
+                    value: cycle,
+                    child: Text(cycle),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedPaymentCycle = value!;
+                  });
+                },
               ),
               const SizedBox(height: 16),
-
-              // Create Button
               ElevatedButton(
                 onPressed: _createCommittee,
-                child: const Text(
-                  'Create Committee',
-                  style: TextStyle(fontSize: 16),
-                ),
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16), backgroundColor: Colors.orange,
+                  backgroundColor: Colors.orange,
                 ),
+                child: const Text('Create Committee'),
               ),
             ],
           ),

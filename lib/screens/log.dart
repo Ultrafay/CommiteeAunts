@@ -242,6 +242,7 @@
 //   }
 // }
 
+//log.dart
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -272,10 +273,10 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               // PNG Logo at the top
               SizedBox(
-                height: 150, // Adjust the size of the logo as needed
-                child: Image.asset('assets/logo.png')
- // Replace with your image path
-              ),
+                  height: 150, // Adjust the size of the logo as needed
+                  child: Image.asset('assets/logo.png')
+                  // Replace with your image path
+                  ),
               const SizedBox(height: 30),
 
               // Login Header
@@ -325,7 +326,6 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       controller: _passwordController,
                       style: const TextStyle(color: Colors.grey),
-                    
                       decoration: InputDecoration(
                         labelText: 'Password',
                         labelStyle: TextStyle(color: Colors.grey[400]),
