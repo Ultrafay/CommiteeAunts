@@ -1,5 +1,4 @@
 //main.dart (homepage)
-
 import 'package:flutter/material.dart';
 import 'package:myapp/screens/log.dart';
 import 'package:myapp/screens/onboarding.dart';
@@ -8,6 +7,7 @@ import 'package:myapp/screens/signup.dart';
 import 'package:myapp/screens/splash_screen.dart';
 import 'package:myapp/screens/create_committee.dart';
 import 'package:myapp/screens/committee_model.dart';
+import 'package:myapp/screens/profile.dart';
 // import 'committee.dart';  // Import the committee model
 
 void main() {
@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUpPage(),
         '/create_committee': (context) => const CreateCommitteePage(),
+        '/profile': (context) => const ProfilePage(),
         '/payment': (context) => PaymentPage(
               committees: [
                 Committee(
@@ -271,6 +272,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.orange,
         items: const [
           BottomNavigationBarItem(
@@ -282,6 +284,10 @@ class _HomePageState extends State<HomePage> {
             label: 'Payments',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.notification_add),
+            label: 'Notifications',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             label: 'Profile',
           ),
@@ -289,6 +295,9 @@ class _HomePageState extends State<HomePage> {
         onTap: (index) {
           if (index == 1) {
             Navigator.pushNamed(context, '/payment');
+          }
+          if (index == 3) {
+            Navigator.pushNamed(context, '/profile');
           }
         },
       ),

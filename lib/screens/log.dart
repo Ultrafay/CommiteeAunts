@@ -260,9 +260,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(0, 255, 254, 254),
         elevation: 0,
       ),
       body: Center(
@@ -271,12 +271,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // PNG Logo at the top
-              SizedBox(
-                  height: 150, // Adjust the size of the logo as needed
-                  child: Image.asset('assets/logo.png')
-                  // Replace with your image path
-                  ),
+              SizedBox(height: 150, child: Image.asset('assets/logo.png')),
               const SizedBox(height: 30),
 
               // Login Header
