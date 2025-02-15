@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/screens/committee_model.dart';
+import 'package:myapp/screens/committee/committee_model.dart';
 import 'paymentformpage.dart';
 
 class PaymentPage extends StatelessWidget {

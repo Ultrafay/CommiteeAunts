@@ -1,7 +1,7 @@
 //create_committe.dart
 
 import 'package:flutter/material.dart';
-import 'package:myapp/screens/committee_model.dart';
+import 'package:myapp/screens/committee/committee_model.dart';
 
 class CreateCommitteePage extends StatefulWidget {
   const CreateCommitteePage({super.key});
